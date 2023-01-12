@@ -59,7 +59,7 @@ struct connection::async_connect_op : asio::coroutine
 };
 
 template<BOOST_ASIO_COMPLETION_TOKEN_FOR(void (system::error_code)) CompletionToken>
-BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(CompletionToken, void (system::error_code))
+BOOST_ASIO_INITFN_RESULT_TYPE(CompletionToken, void (system::error_code))
 connection::async_connect(endpoint_type ep, CompletionToken && completion_token)
 {
 
@@ -89,8 +89,8 @@ struct connection::async_close_op : asio::coroutine
               system::error_code & ec);
 };
 
-template<BOOST_ASIO_COMPLETION_TOKEN_FOR(void (boost::system::error_code)) CompletionToken>
-BOOST_ASIO_INITFN_AUTO_RESULT_TYPE(CompletionToken, void (boost::system::error_code))
+template<BOOST_ASIO_COMPLETION_TOKEN_FOR(void (system::error_code)) CompletionToken>
+BOOST_ASIO_INITFN_RESULT_TYPE(CompletionToken, void (system::error_code))
 connection::async_close(CompletionToken && completion_token)
 {
   return detail::co_run<async_close_op>(
