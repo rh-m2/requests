@@ -10,9 +10,13 @@ find_package(Threads REQUIRED)
 
 if(BOOST_REQUESTS_BUILD_INLINE)
 
-    add_library(boost_requests INTERFACE)
-    target_include_directories(boost_requests INTERFACE "${CMAKE_CURRENT_SOURCE_DIR}/include")
-    target_link_libraries(boost_requests INTERFACE Boost::container Boost::system Boost::thread OpenSSL::SSL OpenSSL::Crypto Threads::Threads)
+    add_library(boost_requests src/src.cpp)
+    target_include_directories(boost_requests PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
+    target_link_libraries(boost_requests PUBLIC 
+        Boost::asem Boost::beast Boost::container Boost::url Boost::system Boost::thread 
+        OpenSSL::SSL OpenSSL::Crypto 
+        Threads::Threads)
+    target_compile_options(boost_requests PUBLIC "-DBOOST_REQUESTS_SEPARATE_COMPILATION=1")
     add_library(Boost::requests ALIAS boost_requests)
 
 else()
